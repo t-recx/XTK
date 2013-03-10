@@ -1,0 +1,38 @@
+Done:
+-----
+Button
+RadioButton
+CheckBox
+ListBox
+ComboBox
+Label
+Form
+ScrollBars
+PictureBox
+ProgressBar
+Slider / Trackbar
+Anchors
+No overlapping (for the combos and stuff) 
+Minimum and maximum control size
+Form Borders and window controls
+Numeric up-down
+TreeListBox
+CheckListBox
+
+Todo:
+-----
+- Revise and see if it Visible and Enabled properties are working correctly (no input for Visibles!);
+- Revise and see if forecolor and backcolor properties are working;
+- Revise all Zs and set standards for visibility (ex: combos should always be on top)
+- Numeric editbox
+- Cursor Offsets
+- Tab and tabpages controls
+- Grid
+- FileDialog
+- Flowlayoutpanel 
+- Colorpicker
+- Toolbars ?
+- Timer ?
+- DateTimePicker ?
+- ListView ?
+- Unifying vertical and horizontal scrollbar controls ?
