@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Theme xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>XTK Default Theme</Name>
+  <TSFilename>TileSet.TSX</TSFilename>
+  <ForeColor>
+    <R>0</R>
+    <G>0</G>
+    <B>0</B>
+    <A>255</A>
+    <PackedValue>4278190080</PackedValue>
+  </ForeColor>
+  <BackColor>
+    <R>128</R>
+    <G>128</G>
+    <B>128</B>
+    <A>255</A>
+    <PackedValue>4286611584</PackedValue>
+  </BackColor>
+</Theme>

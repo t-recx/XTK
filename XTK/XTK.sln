@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C# Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTK", "XTK\XTK.csproj", "{3B42CA0F-3C6A-43C0-8040-B32B9AE00ACF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameResolution", "..\GameResolution\GameResolution\GameResolution.csproj", "{427E0672-B3CF-4562-BAA9-4ECB7C14CB59}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TS", "..\TS\TS\TS.csproj", "{D8862C08-1A0A-4ABA-A269-5BF1C51B69B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XTKExample", "XTKExample\XTKExample\XTKExample.csproj", "{54E45138-1C92-439F-B55C-4E7D098F3ADA}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "XTKExampleContent", "XTKExample\XTKExampleContent\XTKExampleContent.contentproj", "{C8753311-216A-480C-BD60-ACDB8F1D7D9D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3B42CA0F-3C6A-43C0-8040-B32B9AE00ACF}.Debug|x86.ActiveCfg = Debug|x86
+		{3B42CA0F-3C6A-43C0-8040-B32B9AE00ACF}.Debug|x86.Build.0 = Debug|x86
+		{3B42CA0F-3C6A-43C0-8040-B32B9AE00ACF}.Release|x86.ActiveCfg = Release|x86
+		{3B42CA0F-3C6A-43C0-8040-B32B9AE00ACF}.Release|x86.Build.0 = Release|x86
+		{427E0672-B3CF-4562-BAA9-4ECB7C14CB59}.Debug|x86.ActiveCfg = Debug|x86
+		{427E0672-B3CF-4562-BAA9-4ECB7C14CB59}.Debug|x86.Build.0 = Debug|x86
+		{427E0672-B3CF-4562-BAA9-4ECB7C14CB59}.Release|x86.ActiveCfg = Release|x86
+		{427E0672-B3CF-4562-BAA9-4ECB7C14CB59}.Release|x86.Build.0 = Release|x86
+		{D8862C08-1A0A-4ABA-A269-5BF1C51B69B1}.Debug|x86.ActiveCfg = Debug|x86
+		{D8862C08-1A0A-4ABA-A269-5BF1C51B69B1}.Debug|x86.Build.0 = Debug|x86
+		{D8862C08-1A0A-4ABA-A269-5BF1C51B69B1}.Release|x86.ActiveCfg = Release|x86
+		{D8862C08-1A0A-4ABA-A269-5BF1C51B69B1}.Release|x86.Build.0 = Release|x86
+		{54E45138-1C92-439F-B55C-4E7D098F3ADA}.Debug|x86.ActiveCfg = Debug|x86
+		{54E45138-1C92-439F-B55C-4E7D098F3ADA}.Debug|x86.Build.0 = Debug|x86
+		{54E45138-1C92-439F-B55C-4E7D098F3ADA}.Release|x86.ActiveCfg = Release|x86
+		{54E45138-1C92-439F-B55C-4E7D098F3ADA}.Release|x86.Build.0 = Release|x86
+		{C8753311-216A-480C-BD60-ACDB8F1D7D9D}.Debug|x86.ActiveCfg = Debug|x86
+		{C8753311-216A-480C-BD60-ACDB8F1D7D9D}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

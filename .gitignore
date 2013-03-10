@@ -1,0 +1,7 @@
+*.exe
+*.dll
+*.pdb
+*.csproj.FileListAbsolute.txt
+Microsoft.Xna.Framework.RuntimeProfile.txt
+DesignTimeResolveAssemblyReferencesInput.cache
+ResolveAssemblyReference.cache
