@@ -34,6 +34,13 @@ namespace XTK
             item.Ctrl = GetNewCheckBox(_checked);
 
             innerListBox.AddItem(item);
+            ConfigureCoordinatesAndSizes();
+        }
+
+        public void RemoveItem(ListBoxItem item)
+        {
+            innerListBox.RemoveItem(item);
+            ConfigureCoordinatesAndSizes();
         }
 
         public void SetItemCheck(ListBoxItem item, bool _checked)
