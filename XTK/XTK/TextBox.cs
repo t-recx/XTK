@@ -235,20 +235,12 @@ namespace XTK
 
         void verticalScrollbar_IndexChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(horizontalScrollbar.Index);
-            Console.WriteLine(verticalScrollbar.Index);
             innerTextBox.ScrollY = verticalScrollbar.Index;
-            Console.WriteLine(horizontalScrollbar.Index);
-            Console.WriteLine(verticalScrollbar.Index);
         }
 
         void horizontalScrollbar_IndexChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(horizontalScrollbar.Index);
-            Console.WriteLine(verticalScrollbar.Index);
             innerTextBox.ScrollX = horizontalScrollbar.Index;
-            Console.WriteLine(horizontalScrollbar.Index);
-            Console.WriteLine(verticalScrollbar.Index);
         }
     }
 }

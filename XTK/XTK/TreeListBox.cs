@@ -136,7 +136,6 @@ namespace XTK
                 chkExpCol.Checked = tLBIOwner.Expanded;
 
                 chkExpCol.CheckStateChanged += new EventHandler(chkExpCol_CheckStateChanged);
-                Console.WriteLine(tLBIOwner.Text);
             }
 
             return chkExpCol;
