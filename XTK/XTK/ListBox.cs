@@ -14,8 +14,8 @@ namespace XTK
 {
     public class ListBox : Control
     {
-        protected ScrollbarHorizontal horizontalScrollbar;
-        protected ScrollbarVertical verticalScrollbar;
+        protected Scrollbar horizontalScrollbar;
+        protected Scrollbar verticalScrollbar;
         public InnerListBox innerListBox;
 
         private bool useVerticalScrollBar = true, useHorizontalScrollBar = false;
@@ -96,8 +96,8 @@ namespace XTK
         public ListBox(Form formowner)
             : base(formowner)
         {
-            horizontalScrollbar = new ScrollbarHorizontal(formowner);
-            verticalScrollbar = new ScrollbarVertical(formowner);
+            horizontalScrollbar = new Scrollbar(formowner) { Type = ScrollBarType.Horizontal };
+            verticalScrollbar = new Scrollbar(formowner) { Type = ScrollBarType.Vertical };
             innerListBox = new InnerListBox(formowner);
 
             innerListBox.Click += new EventHandler(innerListBox_Click);

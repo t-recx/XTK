@@ -18,6 +18,7 @@ Form Borders and window controls
 Numeric up-down
 TreeListBox
 CheckListBox
+Unifying vertical and horizontal scrollbar controls 
 
 Todo:
 -----
@@ -35,4 +36,3 @@ Todo:
 - Timer ?
 - DateTimePicker ?
 - ListView ?
-- Unifying vertical and horizontal scrollbar controls ?

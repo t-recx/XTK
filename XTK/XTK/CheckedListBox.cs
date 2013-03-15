@@ -37,12 +37,6 @@ namespace XTK
             ConfigureCoordinatesAndSizes();
         }
 
-        public void RemoveItem(ListBoxItem item)
-        {
-            innerListBox.RemoveItem(item);
-            ConfigureCoordinatesAndSizes();
-        }
-
         public void SetItemCheck(ListBoxItem item, bool _checked)
         {
             if (item.Ctrl != null && item.Ctrl is CheckBox)

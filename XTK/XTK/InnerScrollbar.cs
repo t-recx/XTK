@@ -12,23 +12,25 @@ using GameResolution;
 
 namespace XTK
 {
-    public class InnerScrollbarVertical : Control
+    public class InnerScrollbar : Control
     {
         private int totalNrItems;
         private int nrItemsPerPage;
         private int index = 0;
 
-        private double heightPerItem = 1;
+        private double sizePerItem = 1;
 
         private bool mouseDown = false;
-        private int sbYWhenMouseDown = 0;
-        private int mouseYWhenMouseDown = 0;
+        private int sbPosWhenMouseDown = 0;
+        private int mousePosWhenMouseDown = 0;
         private int indexWhenMouseDown = 0;
 
         private double TotalMilliseconds = 0;
 
         private double LastUpdateNextPage = 0;
         private int MsToNextPage = 300;
+
+        public ScrollBarType Type;
 
         public int TotalNrItems
         {
@@ -99,17 +101,17 @@ namespace XTK
             }
         }
 
-        public double HeightPerItem
+        public double SizePerItem
         {
             get
             {
-                return heightPerItem;
+                return sizePerItem;
             }
             set
             {
-                if (value != heightPerItem)
+                if (value != sizePerItem)
                 {
-                    heightPerItem = value;
+                    sizePerItem = value;
 
                     ConfigureBar();
                 }
@@ -120,7 +122,7 @@ namespace XTK
 
         Button Bar;
 
-        public InnerScrollbarVertical(Form formowner)
+        public InnerScrollbar(Form formowner)
             : base(formowner)
         {
             Bar = new Button(formowner);
@@ -131,23 +133,28 @@ namespace XTK
             Bar.DepressImageOnPress = false;
 
             Controls.Add(Bar);
-            this.Init += new EventHandler(InnerScrollbarVertical_Init);
+            this.Init += new EventHandler(InnerScrollbar_Init);
         }
 
-        void InnerScrollbarVertical_Init(object sender, EventArgs e)
+        void InnerScrollbar_Init(object sender, EventArgs e)
         {
-            Bar.Image = Theme.VerticalHandle;
+            Bar.Image = Type == ScrollBarType.Horizontal ? Theme.HorizontalHandle : Theme.VerticalHandle;
         }
 
         void Bar_MouseLeftPressed(object sender, EventArgs e)
         {
             if (!mouseDown)
             {
-                sbYWhenMouseDown = GetScrollBarY();
-                mouseYWhenMouseDown = WindowManager.MouseY;
+                sbPosWhenMouseDown = GetScrollBarPos();
+                mousePosWhenMouseDown = GetMousePos();
                 indexWhenMouseDown = Index;
                 mouseDown = true;
             }
+        }
+
+        private int GetMousePos()
+        {
+            return Type == ScrollBarType.Horizontal ? WindowManager.MouseX : WindowManager.MouseY;
         }
 
         public override void Update()
@@ -158,44 +165,57 @@ namespace XTK
                 mouseDown = false;
 
             if (mouseDown)
-                Index = (int)(indexWhenMouseDown + (WindowManager.MouseY - mouseYWhenMouseDown) / HeightPerItem);
+                Index = (int)(indexWhenMouseDown + (GetMousePos() - mousePosWhenMouseDown) / SizePerItem);
 
             base.Update();
         }
-        
-        private int GetScrollBarHeight()
+
+        private int GetScrollBarSize()
         {
-            int sbHeight;
+            int sbSize;
+            int opposedSize = Type == ScrollBarType.Horizontal ? Width : Height;
 
             if (NrItemsPerPage > TotalNrItems)
-                sbHeight = Height;
+                sbSize = opposedSize;
             else
-                sbHeight = (int)(Height - (TotalNrItems - NrItemsPerPage) * HeightPerItem);
+                sbSize = (int)(opposedSize - (TotalNrItems - NrItemsPerPage) * SizePerItem);
 
-            return sbHeight;
+            return sbSize;
         }
 
-        private int GetScrollBarY()
+        private int GetScrollBarPos()
         {
-            int sbY;
+            int sbPos;
 
             if (NrItemsPerPage > totalNrItems)
-                sbY = 0;
+                sbPos = 0;
             else
-                sbY = (int)(Index * HeightPerItem);
+                sbPos = (int)(Index * SizePerItem);
 
-            return sbY;
+            return sbPos;
         }
 
         public void ConfigureBar()
         {
-            if (Height > 0 && (TotalNrItems - NrItemsPerPage) * HeightPerItem > Height)
-                HeightPerItem = (double)Height / (double)TotalNrItems;
+            int sizeUsed = Type == ScrollBarType.Horizontal ? Width : Height;
 
-            Bar.Width = Width;
-            Bar.Height = GetScrollBarHeight();
-            Bar.X = 0;
-            Bar.Y = GetScrollBarY();
+            if (sizeUsed > 0 && (TotalNrItems - NrItemsPerPage) * SizePerItem > Width)
+                SizePerItem = (double)sizeUsed / (double)TotalNrItems;
+
+            if (Type == ScrollBarType.Horizontal)
+            {
+                Bar.Width = GetScrollBarSize();
+                Bar.Height = Height;
+                Bar.X = GetScrollBarPos();
+                Bar.Y = 0;
+            }
+            else
+            {
+                Bar.Width = Width;
+                Bar.Height = GetScrollBarSize();
+                Bar.X = 0;
+                Bar.Y = GetScrollBarPos();
+            }
         }
 
         public override bool ReceiveMessage(MessageEnum message, object msgTag)
@@ -203,11 +223,21 @@ namespace XTK
             switch (message)
             {
                 case MessageEnum.MouseLeftDown:
-                    if (Focused && MouseIsOnControl() && ((WindowManager.MouseY < OwnerY + Bar.Y) || (WindowManager.MouseY > OwnerY + Bar.Y + Bar.Height)))
+                    if (Focused && MouseIsOnControl())
                     {
                         if (TotalMilliseconds - LastUpdateNextPage > MsToNextPage)
                         {
-                            Index += ((WindowManager.MouseY < OwnerY + Bar.Y) ? -1 : 1) * NrItemsPerPage;
+                            if (Type == ScrollBarType.Horizontal)
+                            {
+                                if ((WindowManager.MouseX < OwnerX + Bar.X) || (WindowManager.MouseX > OwnerX + Bar.X + Bar.Width))
+                                    Index += ((WindowManager.MouseX < OwnerX + Bar.X) ? -1 : 1) * NrItemsPerPage;
+                            }
+                            else
+                            {
+                                if ((WindowManager.MouseY < OwnerY + Bar.Y) || (WindowManager.MouseY > OwnerY + Bar.Y + Bar.Height))
+                                    Index += ((WindowManager.MouseY < OwnerY + Bar.Y) ? -1 : 1) * NrItemsPerPage;
+                            }
+
                             LastUpdateNextPage = TotalMilliseconds;
                         }
                     }
@@ -216,5 +246,11 @@ namespace XTK
 
             return base.ReceiveMessage(message, msgTag);
         }
+    }
+
+    public enum ScrollBarType
+    {
+        Horizontal = 0,
+        Vertical = 1
     }
 }

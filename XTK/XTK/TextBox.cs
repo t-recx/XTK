@@ -14,8 +14,8 @@ namespace XTK
 {
     public class TextBox : Control
     {
-        protected ScrollbarHorizontal horizontalScrollbar;
-        protected ScrollbarVertical verticalScrollbar;
+        protected Scrollbar horizontalScrollbar;
+        protected Scrollbar verticalScrollbar;
         protected InnerTextBox innerTextBox;
 
         private bool useVerticalScrollBar = true, useHorizontalScrollBar = true;
@@ -108,8 +108,8 @@ namespace XTK
         public TextBox(Form formowner)
             : base(formowner)
         {
-            horizontalScrollbar = new ScrollbarHorizontal(formowner);
-            verticalScrollbar = new ScrollbarVertical(formowner);
+            horizontalScrollbar = new Scrollbar(formowner) { Type = ScrollBarType.Horizontal };
+            verticalScrollbar = new Scrollbar(formowner) { Type = ScrollBarType.Vertical };
             innerTextBox = new InnerTextBox(formowner);
 
             horizontalScrollbar.Parent = verticalScrollbar.Parent = innerTextBox.Parent = this;
