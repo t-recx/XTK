@@ -199,7 +199,7 @@ namespace XTK
         {
             int sizeUsed = Type == ScrollBarType.Horizontal ? Width : Height;
 
-            if (sizeUsed > 0 && (TotalNrItems - NrItemsPerPage) * SizePerItem > Width)
+            if (sizeUsed > 0 && (TotalNrItems - NrItemsPerPage) * SizePerItem > sizeUsed)
                 SizePerItem = (double)sizeUsed / (double)TotalNrItems;
 
             if (Type == ScrollBarType.Horizontal)
