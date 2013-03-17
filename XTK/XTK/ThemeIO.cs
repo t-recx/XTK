@@ -58,6 +58,10 @@ namespace XTK
             Theme.TitleBarUnfocusedFrame = GetFrame(Theme.TileSet, "TitleBarUnfocused");
             Theme.WindowEdgeFrame = GetFrame(Theme.TileSet, "WindowEdge");
 
+            Theme.TabMainFrame = GetFrame(Theme.TileSet, "TabMainFrame");
+            Theme.TabPageFrame = GetFrame(Theme.TileSet, "TabPageFrame");
+            Theme.TabPageSelectedFrame = GetFrame(Theme.TileSet, "TabPageSelectedFrame");
+
             Theme.RadioButtonChecked = Theme.TileSet.GetPicture("RadioButton", "Checked", "true");
             Theme.RadioButtonUnchecked = Theme.TileSet.GetPicture("RadioButton", "Checked", "false");
             Theme.CheckBoxChecked = Theme.TileSet.GetPicture("CheckBox", "Checked", "true");

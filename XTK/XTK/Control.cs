@@ -489,6 +489,7 @@ namespace XTK
                 if (owner != value)
                 {
                     owner = value;
+
                     owner.WidthChanged += new EventHandler(parent_SizeChanged);
                     owner.HeightChanged += new EventHandler(parent_SizeChanged);
 

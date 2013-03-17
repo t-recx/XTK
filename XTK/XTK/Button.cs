@@ -65,6 +65,7 @@ namespace XTK
         private bool PressedWithMouse = false;
 
         public bool DepressImageOnPress = true;
+        public bool DepressTextOnPress = true;
 
         public Button(Form formowner)
             : base(formowner)
@@ -82,9 +83,9 @@ namespace XTK
             }
 
             if (Text != null)
-                Drawing.DrawCenteredText(spriteBatch, Font, Text, OwnerX + X + Width / 2 + (Pressed ? 1 : 0), 
+                Drawing.DrawCenteredText(spriteBatch, Font, Text, OwnerX + X + Width / 2 + (Pressed && DepressTextOnPress ? 1 : 0), 
                     OwnerY + Y + Height / 2 - Drawing.GetFontHeight(Font) / 2
-                    + (Pressed ? 1 : 0) - 1, ForeColor, null, Z - 0.001f);
+                    + (Pressed && DepressTextOnPress ? 1 : 0) - 1, ForeColor, null, Z - 0.001f);
 
             if (Image != null)
                 Drawing.Draw(spriteBatch, Image,

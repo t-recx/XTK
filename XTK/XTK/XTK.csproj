@@ -66,6 +66,8 @@
     <Compile Include="CheckedListBox.cs" />
     <Compile Include="InnerScrollbar.cs" />
     <Compile Include="Scrollbar.cs" />
+    <Compile Include="Tab.cs" />
+    <Compile Include="TabPage.cs" />
     <Compile Include="TreeListBox.cs" />
     <Compile Include="NumericUpDown.cs" />
     <Compile Include="ProgressBar.cs" />

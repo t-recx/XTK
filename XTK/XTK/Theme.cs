@@ -91,6 +91,15 @@ namespace XTK
         public List<Texture2D> WindowEdgeFrame;
 
         [XmlIgnore]
+        public List<Texture2D> TabMainFrame;
+
+        [XmlIgnore]
+        public List<Texture2D> TabPageSelectedFrame;
+
+        [XmlIgnore]
+        public List<Texture2D> TabPageFrame;
+
+        [XmlIgnore]
         public Texture2D SelectedListItemBackground;
 
         [XmlIgnore]
@@ -155,7 +164,7 @@ namespace XTK
         
         [XmlIgnore]
         public Texture2D TreeListBoxExpand;
-       
+
         [XmlIgnore]
         public Texture2D TreeListBoxCollapse;
     }

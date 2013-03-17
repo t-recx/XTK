@@ -19,6 +19,7 @@ Numeric up-down
 TreeListBox
 CheckListBox
 Unifying vertical and horizontal scrollbar controls 
+Tab and tabpages controls
 
 Todo:
 -----
@@ -27,7 +28,6 @@ Todo:
 - Revise all Zs and set standards for visibility (ex: combos should always be on top)
 - Numeric editbox
 - Cursor Offsets
-- Tab and tabpages controls
 - Grid
 - FileDialog
 - Flowlayoutpanel 
