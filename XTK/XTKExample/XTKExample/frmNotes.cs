@@ -15,9 +15,33 @@ namespace XTKExample
     public class frmNotes : Form
     {
         Tab tabDocuments;
-        TabPage tabPage1;
-        TabPage tabPage2;
-        TextBox txtTest;
+
+        private void CreateTabPages()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                TabPage tabPage = new TabPage(this)
+                {
+                    Parent = tabDocuments,
+                    Text = "Document #" + (i + 1)
+                };
+
+                TextBox txtPage = new TextBox(this)
+                {
+                    X = 10,
+                    Y = 10,
+                    Width = 280,
+                    Height = 180,
+                    MultiLine = true,
+                    Parent = tabPage,
+                    Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top
+                };
+
+                tabPage.Controls.Add(txtPage);
+
+                tabDocuments.TabPages.Add(tabPage);
+            }
+        }
 
         public frmNotes(WindowManager windowmanager)
             : base(windowmanager)
@@ -33,25 +57,7 @@ namespace XTKExample
                 Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top
             };
 
-            tabPage1 = new TabPage(this)
-            {
-                Parent = tabDocuments,
-                Text = "Document #1"
-            };
-
-            tabPage2 = new TabPage(this)
-            {
-                Parent = tabDocuments,
-                Text = "Document #2"
-            };
-
-            tabDocuments.TabPages.Add(tabPage1);
-            tabDocuments.TabPages.Add(tabPage2);
- 
-            txtTest = new TextBox(this) { X = 10, Y = 10, Width = 280, Height = 180, MultiLine = true, Parent = tabPage1,
-                Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top };
-
-            tabPage1.Controls.Add(txtTest);
+            CreateTabPages();
 
             Controls.Add(tabDocuments);
         }

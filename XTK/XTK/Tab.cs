@@ -15,14 +15,40 @@ namespace XTK
     public class Tab : Control
     {
         private int selectedIndex = 0;
-        private int tabPageHeight = 18;
+        private int ?tabPageHeight = null;
         
         public List<Texture2D> MainFrame;
         public List<Texture2D> TabSelectedFrame;
         public List<Texture2D> TabFrame;
 
         private List<TabPage> tabPages = new List<TabPage>();
-        public List<Button> TabButtons = new List<Button>();
+        private List<Button> TabButtons = new List<Button>();
+
+        private Button btnPrevious;
+        private Button btnNext;
+
+        private int scrollX = 0;
+
+        private int ScrollX
+        {
+            get
+            {
+                return scrollX;
+            }
+            set
+            {
+                if (scrollX != value)
+                {
+                    scrollX = value;
+
+                    if (scrollX < 0)
+                        scrollX = 0;
+
+                    if (scrollX > TabButtons.Count - 1)
+                        scrollX = TabButtons.Count - 1;
+                }
+            }
+        }
 
         public List<TabPage> TabPages
         {
@@ -42,7 +68,10 @@ namespace XTK
         {
             get
             {
-                return tabPageHeight;
+                if (!tabPageHeight.HasValue)
+                    tabPageHeight = Drawing.GetFontHeight(Font) + 1;
+
+                return tabPageHeight.Value;
             }
             set
             {
@@ -100,7 +129,11 @@ namespace XTK
 
         void Tab_SizeChanged(object sender, EventArgs e)
         {
+            if (!Initialized)
+                return;
+
             SetTabPagesSize();
+            SetVisibilityTabButtons();
         }
 
         void Tab_Init(object sender, EventArgs e)
@@ -116,8 +149,8 @@ namespace XTK
             for (int i = 0; i < TabButtons.Count; i++)
                 TabButtons[i].Z = Z - 0.0025f;
 
-            Drawing.DrawFrame(spriteBatch, MainFrame, OwnerX + X, OwnerY + Y + tabPageHeight, 
-                Width, Height - tabPageHeight, Z - 0.001f);
+            Drawing.DrawFrame(spriteBatch, MainFrame, OwnerX + X, OwnerY + Y + TabPageHeight, 
+                Width, Height - TabPageHeight, Z - 0.001f);
 
             //base.Draw();
         }
@@ -134,17 +167,86 @@ namespace XTK
                 SetTabPageSize(i);
         }
 
-        private void ConfigureControl()
+        private void ConfigureNavigationButtons()
+        {
+            btnPrevious = new Button(Owner) { Parent = this, X = Width - TabPageHeight * 2, Height = TabPageHeight, Width = TabPageHeight, Image = Theme.ArrowLeft, Anchor = AnchorStyles.Right | AnchorStyles.Top };
+            btnNext = new Button(Owner) { Parent = this, X = Width - TabPageHeight, Height = TabPageHeight, Width = TabPageHeight, Image = Theme.ArrowRight, Anchor = AnchorStyles.Right | AnchorStyles.Top };
+
+            btnPrevious.InitControl();
+            btnNext.InitControl();
+
+            Controls.Add(btnPrevious);
+            Controls.Add(btnNext);
+
+            btnPrevious.Click += new EventHandler(btnNavigation_Click);
+            btnNext.Click += new EventHandler(btnNavigation_Click);
+        }
+
+        private void SetVisibilityTabButtons()
+        {
+            int currentX = 0;
+            int shownWidth = Width - (btnPrevious.Visible ? btnPrevious.Width : 0) - (btnNext.Visible ? btnNext.Width : 0);
+
+            for (int i = ScrollX; i < TabButtons.Count; i++)
+            {
+                currentX += TabButtons[i].Width;
+
+                TabButtons[i].Visible = currentX <= shownWidth;
+            }
+
+            SetVisibilityNavigationButtons();
+        }
+
+        private void SetVisibilityNavigationButtons()
+        {
+            if (TabButtons.Exists(tb => !tb.Visible))
+                btnNext.Visible = btnPrevious.Visible = true;
+            else
+                btnNext.Visible = btnPrevious.Visible = false;
+        }
+
+        private void Navigate(TabNavigation tabNavigation)
+        {
+            ScrollX += (int)tabNavigation;
+
+            for (int i = 0; i < TabButtons.Count; i++)
+                TabButtons[i].Visible = i >= ScrollX;
+
+            SetTabButtonsPosition();
+            SetVisibilityTabButtons();
+        }
+
+        void btnNavigation_Click(object sender, EventArgs e)
+        {
+            Navigate(btnNext == sender ? TabNavigation.Right : TabNavigation.Left);
+        }
+
+        private void SetTabButtonsPosition()
         {
             int currentX = 0;
 
+            for (int i = 0; i < TabButtons.Count; i++)
+            {
+                if (TabButtons[i].Visible)
+                {
+                    TabButtons[i].X = currentX;
+
+                    currentX += TabButtons[i].Width;
+                }
+            }
+        }
+
+        private void ConfigureControl()
+        {
             Controls.Clear();
             TabButtons.Clear();
 
+            ConfigureNavigationButtons();
+
             for (int i = 0; i < TabPages.Count; i++)
             {
-                TabButtons.Add(new Button(Owner) { Parent = this, X = currentX, Y = 0, Text = TabPages[i].Text,
-                    Width = (int)Font.MeasureString(TabPages[i].Text).X + TabPages[i].TextPadding, Height = tabPageHeight + 1 });
+                TabButtons.Add(new Button(Owner) { Parent = this, Y = 0, Text = TabPages[i].Text,
+                    Width = (int)Font.MeasureString(TabPages[i].Text).X + TabPages[i].TextPadding, Height = TabPageHeight + 1 });
 
                 SetButtonFrame(TabButtons[i], SelectedIndex == i);
 
@@ -159,13 +261,15 @@ namespace XTK
                 TabPages[i].Parent = this;
                 TabPages[i].Selected = SelectedIndex == i;
 
-                currentX = TabButtons[i].Width;
 
                 Controls.AddRange(new Control[] { TabButtons[i], TabPages[i] });
 
                 TabButtons[i].InitControl();
                 TabPages[i].InitControl();
             }
+
+            SetTabButtonsPosition();
+            SetVisibilityTabButtons();
         }
 
         private void SetButtonFrame(Button b, bool selected)
@@ -184,5 +288,11 @@ namespace XTK
                 SetButtonFrame(TabButtons[i], SelectedIndex == i);
             }
         }
+    }
+
+    public enum TabNavigation
+    {
+        Left = -1,
+        Right = 1
     }
 }
