@@ -47,7 +47,7 @@ namespace XTK
 
         private int previousParentWidth, previousParentHeight;
 
-        protected bool Initialized = false;
+        public bool Initialized = false;
 
         protected int minimumWidth = 0, minimumHeight = 0, maximumWidth = Int32.MaxValue, maximumHeight = Int32.MaxValue;
 

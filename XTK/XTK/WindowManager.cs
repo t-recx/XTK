@@ -58,6 +58,8 @@ namespace XTK
             graphicsDevice = gDevice;
             spriteBatch = sBatch;
 
+            InitializeFormsNotInitialized();
+
             foreach (Form form in Forms)
                 Messages.SendMessage(form, MessageEnum.Draw, null);
 
@@ -92,17 +94,7 @@ namespace XTK
 
             if (Forms != null && Forms.Count > 0)
             {
-                if (!Initialized)
-                {
-                    foreach (Form form in Forms)
-                        form.InitControl();
-
-                    BringToFront(Forms[0]);
-
-                    Messages.BroadcastMessage(Forms, MessageEnum.Init);
-
-                    Initialized = true;
-                }
+                InitializeFormsNotInitialized();
 
                 if (!PreviousMouseLeftPressed && MouseLeftPressed)
                     Messages.BroadcastMessage(Forms, MessageEnum.MouseLeftPressed);
@@ -137,6 +129,23 @@ namespace XTK
 
                 foreach (Form form in Forms)
                     Messages.SendMessage(form, MessageEnum.Logic, null);
+            }
+        }
+
+        private void InitializeFormsNotInitialized()
+        {
+            if (Forms == null || Forms.Count == 0)
+                return;
+
+            foreach (Form form in Forms)
+            {
+                if (form.Initialized)
+                    continue;
+
+                form.InitControl();
+                BringToFront(form);
+
+                Messages.BroadcastMessage(Forms, MessageEnum.Init);
             }
         }
 
